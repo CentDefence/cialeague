@@ -16,7 +16,7 @@ body {
     overflow-x: hidden;
 }
 
-/* BACKGROUND */
+/* BACKGROUND DETAIL */
 body::before {
     content: "";
     position: fixed;
@@ -37,6 +37,7 @@ header {
     padding: 15px 30px;
     background: rgba(15,15,25,0.7);
     backdrop-filter: blur(10px);
+    flex-wrap: wrap;
 }
 
 .logo {
@@ -83,12 +84,7 @@ nav a:hover {
     font-weight: 600;
     letter-spacing: 1px;
     min-width: 250px;
-}
-
-.countdown-date {
-    margin-top: 8px;
-    font-size: 14px;
-    color: #fff;
+    border: 2px solid #8a2eff;
 }
 
 /* HERO */
@@ -159,22 +155,45 @@ nav a:hover {
 .info {
     text-align: center;
     max-width: 700px;
-    margin: 30px auto;
+    margin: 30px auto 10px;
     color: #bbb;
     line-height: 1.6;
 }
 
-.date {
-    margin-top: 10px;
-    font-size: 17px;
+.extra-countdown {
+    display: inline-block;
+    background: black;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 1px;
     color: white;
+    border: 2px solid #ff2a6d;
+    margin-top: 15px;
 }
 
+/* FOOTER */
 .footer {
     text-align: center;
-    margin: 40px 0 20px;
+    margin: 30px 0 20px;
     font-size: 14px;
     color: #888;
+}
+
+/* SOON POPUP */
+.soon {
+    position: fixed;
+    top: 20px;
+    right: -200px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    background: linear-gradient(90deg,#8a2eff,#ff2a6d);
+    transition: 0.5s;
+}
+
+.soon.show {
+    right: 20px;
 }
 </style>
 </head>
@@ -189,10 +208,10 @@ nav a:hover {
     </nav>
 </header>
 
-<!-- COUNTDOWN -->
+<!-- TOP COUNTDOWN -->
 <div class="countdown-container">
     <div class="countdown-title">COUNTDOWN TO CIA OPEN</div>
-    <div class="countdown-box" id="countdown">Loading...</div>
+    <div class="countdown-box" id="countdown-top">Loading...</div>
     <div class="countdown-date">14.01.26</div>
 </div>
 
@@ -215,6 +234,7 @@ nav a:hover {
 <div class="info">
     This will be the best league where the strongest player in the CIS will be determined.<br>
     Sqvnix and Polcovodec are bringing back the legend — CIA.
+    <div class="extra-countdown" id="countdown-bottom">Loading...</div>
 </div>
 
 <div class="footer">@CIALEAGUE2026</div>
@@ -235,28 +255,26 @@ function showSoon() {
 }
 
 // COUNTDOWN
-const countdownEl = document.getElementById("countdown");
 const targetDate = new Date("2026-01-14T00:00:00").getTime();
+const countdownTop = document.getElementById("countdown-top");
+const countdownBottom = document.getElementById("countdown-bottom");
 
 function updateCountdown() {
     const now = new Date().getTime();
     const diff = targetDate - now;
-
-    if (diff <= 0) {
-        countdownEl.innerHTML = "OPEN!";
-        clearInterval(interval);
-        return;
-    }
 
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000*60*60));
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000*60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    countdownEl.innerHTML = `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
+    const display = `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
+
+    countdownTop.innerHTML = display;
+    countdownBottom.innerHTML = display;
 }
 
-const interval = setInterval(updateCountdown, 1000);
+setInterval(updateCountdown, 1000);
 updateCountdown();
 </script>
 
