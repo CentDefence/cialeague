@@ -210,6 +210,39 @@ nav a:hover {
     text-shadow: 0 0 10px rgba(255,42,109,0.7);
 }
 
+/* NEW CONTACT BLOCK */
+.contact-block {
+    text-align: center;
+    margin: 30px auto 50px;
+    padding: 25px 20px;
+    max-width: 600px;
+    border-radius: 16px;
+    background: linear-gradient(135deg,#8a2eff,#ff2a6d,#2a7bff);
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 0 25px rgba(255,42,109,0.6);
+    animation: glow 2s infinite alternate;
+}
+
+.contact-block a {
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: 0.3s;
+}
+
+.contact-block a:hover {
+    text-shadow: 0 0 10px #fff;
+    transform: scale(1.05);
+}
+
+@keyframes glow {
+    0% { box-shadow: 0 0 15px rgba(255,42,109,0.5); }
+    50% { box-shadow: 0 0 35px rgba(255,42,109,0.8); }
+    100% { box-shadow: 0 0 15px rgba(255,42,109,0.5); }
+}
+
 /* FOOTER */
 .footer {
     text-align: center;
@@ -258,6 +291,13 @@ nav a:hover {
 <div class="countdown-container">
     <div class="countdown-box" id="countdown">Loading...</div>
     <div class="countdown-date">1.04.26</div>
+</div>
+
+<!-- CONTACT BLOCK -->
+<div class="contact-block">
+    CIS2026 — Want to contact us?  
+    <a href="https://t.me/Sqvnix" target="_blank">Telegram</a> |  
+    <a href="https://discord.gg/WXKUCSwv" target="_blank">Discord</a>
 </div>
 
 <div class="footer">@CIALEAGUE2026</div>
