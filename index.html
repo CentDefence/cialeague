@@ -3,52 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>League Site</title>
+<title>CIA League</title>
 
 <style>
+
+/* GLOBAL */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #0b0f1a;
+    background: black;
     color: white;
+    overflow-x: hidden;
+}
+
+/* ANIMATED BACKGROUND */
+body::before {
+    content: "";
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 20% 30%, red, transparent 40%),
+                radial-gradient(circle at 80% 70%, blue, transparent 40%);
+    animation: moveBg 12s infinite alternate;
+    z-index: -1;
+    filter: blur(120px);
+}
+
+@keyframes moveBg {
+    0% { transform: translate(0,0); }
+    100% { transform: translate(-200px, -100px); }
 }
 
 /* HEADER */
 header {
+    position: fixed;
+    width: 100%;
+    padding: 15px 40px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 15px 40px;
-    background: #11182a;
+    backdrop-filter: blur(15px);
+    background: rgba(10,10,20,0.6);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    z-index: 100;
 }
 
 .logo {
-    font-size: 22px;
+    font-size: 26px;
     font-weight: bold;
-    color: #ff2a2a;
+    background: linear-gradient(90deg, red, blue, red);
+    background-size: 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: glowText 3s linear infinite;
+}
+
+@keyframes glowText {
+    0% { background-position: 0%; }
+    100% { background-position: 200%; }
 }
 
 nav a {
     margin: 0 15px;
     text-decoration: none;
     color: white;
-    transition: 0.2s;
+    position: relative;
 }
 
-nav a:hover {
-    color: #2a6bff;
+nav a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background: linear-gradient(90deg, red, blue);
+    transition: 0.3s;
+}
+
+nav a:hover::after {
+    width: 100%;
 }
 
 /* HERO */
 .hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     text-align: center;
-    padding: 100px 20px;
-    background: linear-gradient(135deg, #0b0f1a, #11182a);
 }
 
 .hero h1 {
-    font-size: 48px;
-    margin-bottom: 10px;
+    font-size: 70px;
+    background: linear-gradient(90deg, red, blue);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .hero p {
@@ -56,92 +107,167 @@ nav a:hover {
 }
 
 .hero button {
-    margin-top: 20px;
-    padding: 12px 25px;
-    border: none;
-    background: #ff2a2a;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 8px;
-}
-
-/* CARDS */
-.section {
-    padding: 50px 40px;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-.card {
-    background: #11182a;
-    padding: 20px;
+    margin-top: 25px;
+    padding: 15px 40px;
     border-radius: 12px;
+    border: none;
+    font-size: 16px;
+    background: linear-gradient(90deg, red, blue);
+    background-size: 200%;
+    cursor: pointer;
     transition: 0.3s;
 }
 
-.card:hover {
-    transform: translateY(-5px);
+.hero button:hover {
+    background-position: right;
+    transform: scale(1.1);
 }
 
-.card h3 {
-    margin-bottom: 10px;
+/* SECTION */
+.section {
+    padding: 100px 40px;
+}
+
+/* GLASS CARDS */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    padding: 25px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+    transition: 0.4s;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    background: linear-gradient(120deg, transparent, red, blue, transparent);
+    animation: shine 4s linear infinite;
+    opacity: 0.2;
+}
+
+@keyframes shine {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.05);
+}
+
+/* TABLE */
+.table {
+    max-width: 900px;
+    margin: auto;
+    border-radius: 15px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    transition: 0.3s;
+}
+
+.row:hover {
+    background: linear-gradient(90deg, rgba(255,0,0,0.2), rgba(0,0,255,0.2));
+}
+
+/* SCROLL ANIMATION */
+.fade {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: 1s;
+}
+
+.fade.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* FOOTER */
 footer {
     text-align: center;
-    padding: 20px;
-    background: #11182a;
-    margin-top: 40px;
-    color: #777;
+    padding: 40px;
+    color: #aaa;
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
-    <div class="logo">CIS LEAGUE</div>
+    <div class="logo">CIA</div>
     <nav>
         <a href="#">Home</a>
+        <a href="#">League</a>
         <a href="#">Teams</a>
         <a href="#">Matches</a>
-        <a href="#">Table</a>
     </nav>
 </header>
 
 <section class="hero">
-    <h1>Welcome to CIS League</h1>
-    <p>Best football league experience</p>
-    <button>Get Started</button>
+    <h1>CIA LEAGUE</h1>
+    <p>Ultimate football simulation</p>
+    <button>PLAY NOW</button>
 </section>
 
-<section class="section">
-    <h2>Leagues</h2>
+<section class="section fade">
+    <h2>Competitions</h2>
     <div class="cards">
-        <div class="card">
-            <h3>Premier Division</h3>
-            <p>Main league with top teams</p>
-        </div>
-        <div class="card">
-            <h3>Second Division</h3>
-            <p>Upcoming talents</p>
-        </div>
-        <div class="card">
-            <h3>Cup</h3>
-            <p>Knockout tournament</p>
-        </div>
+        <div class="card"><h3>Premier</h3></div>
+        <div class="card"><h3>Division 2</h3></div>
+        <div class="card"><h3>International Cup</h3></div>
+    </div>
+</section>
+
+<section class="section fade">
+    <h2>Top Teams</h2>
+    <div class="cards">
+        <div class="card"><h3>Alpha</h3></div>
+        <div class="card"><h3>Beta</h3></div>
+        <div class="card"><h3>Gamma</h3></div>
+    </div>
+</section>
+
+<section class="section fade">
+    <h2>Standings</h2>
+    <div class="table">
+        <div class="row"><span>1. Alpha</span><span>30</span></div>
+        <div class="row"><span>2. Beta</span><span>25</span></div>
+        <div class="row"><span>3. Gamma</span><span>20</span></div>
     </div>
 </section>
 
 <footer>
-    © 2026 CIS League
+    © 2026 CIA League
 </footer>
+
+<script>
+const items = document.querySelectorAll('.fade');
+
+window.addEventListener('scroll', () => {
+    items.forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+            el.classList.add('show');
+        }
+    });
+});
+</script>
 
 </body>
 </html>
