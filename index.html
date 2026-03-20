@@ -7,29 +7,29 @@
 
 <style>
 
-/* GLOBAL */
+/* BASE */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: black;
+    background: #050816;
     color: white;
     overflow-x: hidden;
 }
 
-/* ANIMATED BACKGROUND */
+/* ANIMATED BG */
 body::before {
     content: "";
     position: fixed;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle at 20% 30%, red, transparent 40%),
-                radial-gradient(circle at 80% 70%, blue, transparent 40%);
-    animation: moveBg 12s infinite alternate;
+    background: radial-gradient(circle at 20% 40%, #0044ff, transparent 40%),
+                radial-gradient(circle at 80% 70%, #ff0000, transparent 40%);
+    filter: blur(140px);
+    animation: bgMove 12s infinite alternate;
     z-index: -1;
-    filter: blur(120px);
 }
 
-@keyframes moveBg {
+@keyframes bgMove {
     0% { transform: translate(0,0); }
     100% { transform: translate(-200px, -100px); }
 }
@@ -41,23 +41,23 @@ header {
     padding: 15px 40px;
     display: flex;
     justify-content: space-between;
-    backdrop-filter: blur(15px);
-    background: rgba(10,10,20,0.6);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+    background: rgba(5,8,22,0.7);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
     z-index: 100;
 }
 
 .logo {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: bold;
-    background: linear-gradient(90deg, red, blue, red);
+    background: linear-gradient(90deg, #00aaff, #0044ff, #00aaff);
     background-size: 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: glowText 3s linear infinite;
+    animation: glow 4s linear infinite;
 }
 
-@keyframes glowText {
+@keyframes glow {
     0% { background-position: 0%; }
     100% { background-position: 200%; }
 }
@@ -65,23 +65,12 @@ header {
 nav a {
     margin: 0 15px;
     text-decoration: none;
-    color: white;
-    position: relative;
-}
-
-nav a::after {
-    content: "";
-    position: absolute;
-    width: 0%;
-    height: 2px;
-    bottom: -5px;
-    left: 0;
-    background: linear-gradient(90deg, red, blue);
+    color: #ccc;
     transition: 0.3s;
 }
 
-nav a:hover::after {
-    width: 100%;
+nav a:hover {
+    color: #00aaff;
 }
 
 /* HERO */
@@ -91,56 +80,68 @@ nav a:hover::after {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     text-align: center;
+
+    background: radial-gradient(circle at center, rgba(0,80,255,0.2), transparent 70%);
 }
 
 .hero h1 {
     font-size: 70px;
-    background: linear-gradient(90deg, red, blue);
+    background: linear-gradient(90deg, #00aaff, #0044ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .hero p {
     color: #aaa;
+    margin-top: 10px;
 }
 
 .hero button {
     margin-top: 25px;
-    padding: 15px 40px;
+    padding: 14px 40px;
     border-radius: 12px;
     border: none;
-    font-size: 16px;
-    background: linear-gradient(90deg, red, blue);
+    background: linear-gradient(90deg, #0044ff, #00aaff);
     background-size: 200%;
+    color: white;
     cursor: pointer;
     transition: 0.3s;
 }
 
 .hero button:hover {
     background-position: right;
-    transform: scale(1.1);
+    transform: scale(1.08);
 }
 
-/* SECTION */
+/* SECTIONS */
 .section {
-    padding: 100px 40px;
+    padding: 120px 40px;
+    text-align: center;
 }
 
-/* GLASS CARDS */
+.section h2 {
+    font-size: 36px;
+    margin-bottom: 50px;
+    background: linear-gradient(90deg, #00aaff, #0044ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* CARDS GRID */
 .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
 }
 
+/* CARD */
 .card {
-    padding: 25px;
+    padding: 40px 20px;
     border-radius: 20px;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.04);
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(0,170,255,0.2);
     position: relative;
     overflow: hidden;
     transition: 0.4s;
@@ -149,11 +150,11 @@ nav a:hover::after {
 .card::before {
     content: "";
     position: absolute;
-    width: 150%;
-    height: 150%;
-    background: linear-gradient(120deg, transparent, red, blue, transparent);
-    animation: shine 4s linear infinite;
-    opacity: 0.2;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(120deg, transparent, #00aaff, transparent);
+    animation: shine 5s linear infinite;
+    opacity: 0.15;
 }
 
 @keyframes shine {
@@ -162,34 +163,38 @@ nav a:hover::after {
 }
 
 .card:hover {
-    transform: translateY(-10px) scale(1.05);
+    transform: translateY(-12px) scale(1.03);
+    border: 1px solid #00aaff;
 }
 
-/* TABLE */
-.table {
-    max-width: 900px;
-    margin: auto;
-    border-radius: 15px;
-    overflow: hidden;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
+/* CTA BLOCK */
+.cta {
+    margin: 100px auto;
+    max-width: 800px;
+    padding: 60px;
+    border-radius: 25px;
+    background: linear-gradient(135deg, rgba(0,100,255,0.2), rgba(0,0,0,0.3));
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0,170,255,0.3);
 }
 
-.row {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px;
-    transition: 0.3s;
+.cta h2 {
+    font-size: 40px;
 }
 
-.row:hover {
-    background: linear-gradient(90deg, rgba(255,0,0,0.2), rgba(0,0,255,0.2));
+.cta button {
+    margin-top: 20px;
+    padding: 15px 40px;
+    border-radius: 10px;
+    border: none;
+    background: linear-gradient(90deg, #0044ff, #00aaff);
+    cursor: pointer;
 }
 
-/* SCROLL ANIMATION */
+/* SCROLL ANIM */
 .fade {
     opacity: 0;
-    transform: translateY(50px);
+    transform: translateY(60px);
     transition: 1s;
 }
 
@@ -200,9 +205,9 @@ nav a:hover::after {
 
 /* FOOTER */
 footer {
-    text-align: center;
     padding: 40px;
-    color: #aaa;
+    text-align: center;
+    color: #777;
 }
 
 </style>
@@ -216,41 +221,38 @@ footer {
         <a href="#">Home</a>
         <a href="#">League</a>
         <a href="#">Teams</a>
-        <a href="#">Matches</a>
+        <a href="#">Join</a>
     </nav>
 </header>
 
 <section class="hero">
     <h1>CIA LEAGUE</h1>
-    <p>Ultimate football simulation</p>
-    <button>PLAY NOW</button>
+    <p>Next-gen football simulation platform</p>
+    <button>START NOW</button>
 </section>
 
 <section class="section fade">
-    <h2>Competitions</h2>
+    <h2>Leagues</h2>
     <div class="cards">
-        <div class="card"><h3>Premier</h3></div>
-        <div class="card"><h3>Division 2</h3></div>
+        <div class="card"><h3>Premier Division</h3></div>
+        <div class="card"><h3>Championship</h3></div>
         <div class="card"><h3>International Cup</h3></div>
     </div>
 </section>
 
 <section class="section fade">
-    <h2>Top Teams</h2>
+    <h2>Features</h2>
     <div class="cards">
-        <div class="card"><h3>Alpha</h3></div>
-        <div class="card"><h3>Beta</h3></div>
-        <div class="card"><h3>Gamma</h3></div>
+        <div class="card"><h3>Real Matches</h3></div>
+        <div class="card"><h3>Live Stats</h3></div>
+        <div class="card"><h3>Competitive System</h3></div>
     </div>
 </section>
 
-<section class="section fade">
-    <h2>Standings</h2>
-    <div class="table">
-        <div class="row"><span>1. Alpha</span><span>30</span></div>
-        <div class="row"><span>2. Beta</span><span>25</span></div>
-        <div class="row"><span>3. Gamma</span><span>20</span></div>
-    </div>
+<section class="cta fade">
+    <h2>Join CIA League Today</h2>
+    <p>Compete with the best players</p>
+    <button>REGISTER</button>
 </section>
 
 <footer>
@@ -258,10 +260,10 @@ footer {
 </footer>
 
 <script>
-const items = document.querySelectorAll('.fade');
+const f = document.querySelectorAll('.fade');
 
 window.addEventListener('scroll', () => {
-    items.forEach(el => {
+    f.forEach(el => {
         if (el.getBoundingClientRect().top < window.innerHeight - 100) {
             el.classList.add('show');
         }
