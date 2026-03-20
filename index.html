@@ -61,36 +61,57 @@ nav a:hover {
     transform: scale(1.05);
 }
 
-/* COUNTDOWN SECTION */
-.countdown-container {
+/* FULL SCREEN SOON */
+.full-soon {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.9);
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.full-soon h1 {
+    font-size: 80px;
+    font-weight: 800;
     text-align: center;
-    margin: 20px 0;
+    background: linear-gradient(90deg,#8a2eff,#ff2a6d,#2a7bff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
 }
 
-.countdown-title {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 10px;
-    letter-spacing: 1px;
-    color: #fff;
-}
-
-.countdown-box {
+/* BIG TIMER */
+.big-timer {
     display: inline-block;
     background: black;
-    padding: 15px 25px;
-    border-radius: 8px;
-    font-size: 24px;
-    font-weight: 600;
+    padding: 20px 40px;
+    border-radius: 12px;
+    font-size: 36px;
+    font-weight: 700;
     letter-spacing: 1px;
-    min-width: 250px;
-    border: 2px solid #8a2eff;
+    color: white;
+    border: 3px solid #ff2a6d;
+    text-align: center;
 }
 
-/* HERO */
+.big-timer-date {
+    margin-top: 10px;
+    font-size: 18px;
+    color: white;
+    text-align: center;
+}
+
+/* HERO & TAGS */
 .hero {
     text-align: center;
     padding: 40px 20px 30px;
+    margin-top: 50px;
 }
 
 .hero h1 {
@@ -106,7 +127,6 @@ nav a:hover {
     margin-bottom: 25px;
 }
 
-/* JOIN BUTTON */
 .join-btn {
     margin-top: 20px;
     padding: 14px 50px;
@@ -128,7 +148,6 @@ nav a:hover {
     box-shadow: 0 0 25px rgba(88,101,242,0.8);
 }
 
-/* TAGS BELOW JOIN */
 .tags-container {
     display: flex;
     justify-content: center;
@@ -155,22 +174,9 @@ nav a:hover {
 .info {
     text-align: center;
     max-width: 700px;
-    margin: 30px auto 10px;
+    margin: 30px auto;
     color: #bbb;
     line-height: 1.6;
-}
-
-.extra-countdown {
-    display: inline-block;
-    background: black;
-    padding: 15px 30px;
-    border-radius: 10px;
-    font-size: 22px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    color: white;
-    border: 2px solid #ff2a6d;
-    margin-top: 15px;
 }
 
 /* FOOTER */
@@ -179,21 +185,6 @@ nav a:hover {
     margin: 30px 0 20px;
     font-size: 14px;
     color: #888;
-}
-
-/* SOON POPUP */
-.soon {
-    position: fixed;
-    top: 20px;
-    right: -200px;
-    padding: 10px 20px;
-    border-radius: 10px;
-    background: linear-gradient(90deg,#8a2eff,#ff2a6d);
-    transition: 0.5s;
-}
-
-.soon.show {
-    right: 20px;
 }
 </style>
 </head>
@@ -208,11 +199,11 @@ nav a:hover {
     </nav>
 </header>
 
-<!-- TOP COUNTDOWN -->
-<div class="countdown-container">
-    <div class="countdown-title">COUNTDOWN TO CIA OPEN</div>
-    <div class="countdown-box" id="countdown-top">Loading...</div>
-    <div class="countdown-date">14.01.26</div>
+<!-- FULL SCREEN SOON OPEN -->
+<div class="full-soon" id="soonScreen">
+    <h1>SOON OPEN</h1>
+    <div class="big-timer" id="countdown">Loading...</div>
+    <div class="big-timer-date">1.04.26</div>
 </div>
 
 <!-- HERO -->
@@ -234,12 +225,9 @@ nav a:hover {
 <div class="info">
     This will be the best league where the strongest player in the CIS will be determined.<br>
     Sqvnix and Polcovodec are bringing back the legend — CIA.
-    <div class="extra-countdown" id="countdown-bottom">Loading...</div>
 </div>
 
 <div class="footer">@CIALEAGUE2026</div>
-
-<div class="soon" id="soon">SOON</div>
 
 <script>
 // Discord button
@@ -247,34 +235,30 @@ function join() {
     window.open("https://discord.gg/WXKUCSwv","_blank");
 }
 
-// SHOW SOON
+// SHOW SOON SCREEN ON NAV CLICK
 function showSoon() {
-    const el = document.getElementById("soon");
-    el.classList.add("show");
-    setTimeout(() => el.classList.remove("show"), 2000);
+    const el = document.getElementById("soonScreen");
+    el.style.display = "flex";
+    setTimeout(() => el.style.display = "none", 4000);
 }
 
 // COUNTDOWN
-const targetDate = new Date("2026-01-14T00:00:00").getTime();
-const countdownTop = document.getElementById("countdown-top");
-const countdownBottom = document.getElementById("countdown-bottom");
+const targetDate = new Date("2026-04-01T00:00:00").getTime();
+const countdown = document.getElementById("countdown");
 
 function updateCountdown() {
     const now = new Date().getTime();
     const diff = targetDate - now;
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000*60*60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000*60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    const days = Math.floor(diff / (1000*60*60*24));
+    const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+    const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
+    const seconds = Math.floor((diff % (1000*60)) / 1000);
 
-    const display = `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
-
-    countdownTop.innerHTML = display;
-    countdownBottom.innerHTML = display;
+    countdown.innerHTML = `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
 }
 
-setInterval(updateCountdown, 1000);
+setInterval(updateCountdown,1000);
 updateCountdown();
 </script>
 
