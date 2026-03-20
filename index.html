@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CIA League</title>
+<title>CIA League Countdown</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
@@ -16,7 +16,7 @@ body {
     overflow-x: hidden;
 }
 
-/* BACKGROUND DETAIL */
+/* BACKGROUND */
 body::before {
     content: "";
     position: fixed;
@@ -30,17 +30,13 @@ body::before {
     z-index: -1;
 }
 
-/* HEADER */
+/* HEADER NAV */
 header {
     display: flex;
     justify-content: space-between;
     padding: 15px 30px;
     background: rgba(15,15,25,0.7);
     backdrop-filter: blur(10px);
-    flex-wrap: wrap;
-    opacity: 0;
-    transform: translateY(-20px);
-    animation: fadeSlide 1s forwards;
 }
 
 .logo {
@@ -49,9 +45,6 @@ header {
     background: linear-gradient(90deg,#8a2eff,#ff2a6d,#2a7bff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    opacity: 0;
-    transform: translateY(-10px);
-    animation: fadeSlide 1s forwards 0.3s;
 }
 
 nav a {
@@ -60,9 +53,6 @@ nav a {
     color: #aaa;
     font-weight: 600;
     transition: 0.3s;
-    opacity: 0;
-    transform: translateY(-10px);
-    animation: fadeSlide 1s forwards 0.5s;
 }
 
 nav a:hover {
@@ -70,13 +60,41 @@ nav a:hover {
     transform: scale(1.05);
 }
 
+/* COUNTDOWN SECTION */
+.countdown-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.countdown-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+.countdown-box {
+    display: inline-block;
+    background: black;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    min-width: 250px;
+}
+
+.countdown-date {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #fff;
+}
+
 /* HERO */
 .hero {
     text-align: center;
-    padding: 60px 20px 30px;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeSlide 1s forwards 0.7s;
+    padding: 40px 20px 30px;
 }
 
 .hero h1 {
@@ -144,9 +162,6 @@ nav a:hover {
     margin: 30px auto;
     color: #bbb;
     line-height: 1.6;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeSlide 1s forwards 1s;
 }
 
 .date {
@@ -160,37 +175,9 @@ nav a:hover {
     margin: 40px 0 20px;
     font-size: 14px;
     color: #888;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeSlide 1s forwards 1.2s;
 }
-
-/* SOON POPUP */
-.soon {
-    position: fixed;
-    top: 20px;
-    right: -200px;
-    padding: 10px 20px;
-    border-radius: 10px;
-    background: linear-gradient(90deg,#8a2eff,#ff2a6d);
-    transition: 0.5s;
-}
-
-.soon.show {
-    right: 20px;
-}
-
-/* ANIMATION */
-@keyframes fadeSlide {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 </style>
 </head>
-
 <body>
 
 <header>
@@ -202,6 +189,14 @@ nav a:hover {
     </nav>
 </header>
 
+<!-- COUNTDOWN -->
+<div class="countdown-container">
+    <div class="countdown-title">COUNTDOWN TO CIA OPEN</div>
+    <div class="countdown-box" id="countdown">Loading...</div>
+    <div class="countdown-date">14.01.26</div>
+</div>
+
+<!-- HERO -->
 <div class="hero">
     <h1>CIA LEAGUE</h1>
     <p>Join the new era</p>
@@ -220,7 +215,6 @@ nav a:hover {
 <div class="info">
     This will be the best league where the strongest player in the CIS will be determined.<br>
     Sqvnix and Polcovodec are bringing back the legend — CIA.
-    <div class="date">14.01.26</div>
 </div>
 
 <div class="footer">@CIALEAGUE2026</div>
@@ -228,15 +222,42 @@ nav a:hover {
 <div class="soon" id="soon">SOON</div>
 
 <script>
+// Discord button
+function join() {
+    window.open("https://discord.gg/WXKUCSwv","_blank");
+}
+
+// SHOW SOON
 function showSoon() {
     const el = document.getElementById("soon");
     el.classList.add("show");
     setTimeout(() => el.classList.remove("show"), 2000);
 }
 
-function join() {
-    window.open("https://discord.gg/WXKUCSwv","_blank");
+// COUNTDOWN
+const countdownEl = document.getElementById("countdown");
+const targetDate = new Date("2026-01-14T00:00:00").getTime();
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const diff = targetDate - now;
+
+    if (diff <= 0) {
+        countdownEl.innerHTML = "OPEN!";
+        clearInterval(interval);
+        return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000*60*60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000*60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    countdownEl.innerHTML = `${days}d : ${hours}h : ${minutes}m : ${seconds}s`;
 }
+
+const interval = setInterval(updateCountdown, 1000);
+updateCountdown();
 </script>
 
 </body>
