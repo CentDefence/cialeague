@@ -16,6 +16,7 @@ body {
     overflow-x: hidden;
 }
 
+/* BACKGROUND DETAIL */
 body::before {
     content: "";
     position: fixed;
@@ -60,47 +61,29 @@ nav a:hover {
     transform: scale(1.05);
 }
 
-/* SOON OPEN POPUP */
+/* SOON OPEN ANIMATION */
 .soon {
     position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background: rgba(0,0,0,0.9);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:80px;
-    font-weight:800;
-    text-align:center;
-    background: rgba(0,0,0,0.9);
-    color:white;
-    z-index:10;
-    display:none;
-}
-
-/* COUNTDOWN */
-.countdown-container {
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 80px;
+    font-weight: 800;
     text-align: center;
-    margin: 50px 0 20px;
-}
-
-.countdown-box {
-    display: inline-block;
-    background: black;
-    padding: 20px 40px;
-    border-radius: 12px;
-    font-size: 36px;
-    font-weight: 700;
     color: white;
-    border: 3px solid #ff2a6d;
+    z-index: 10;
+    transition: top 0.5s ease;
 }
 
 /* HERO & TAGS */
 .hero {
     text-align: center;
-    padding: 40px 20px 30px;
+    padding: 60px 20px 20px;
 }
 
 .hero h1 {
@@ -163,9 +146,33 @@ nav a:hover {
 .info {
     text-align: center;
     max-width: 700px;
-    margin: 30px auto;
+    margin: 30px auto 20px;
     color: #bbb;
     line-height: 1.6;
+}
+
+/* COUNTDOWN BELOW INFO */
+.countdown-container {
+    text-align: center;
+    margin: 20px 0 50px;
+}
+
+.countdown-box {
+    display: inline-block;
+    background: black;
+    padding: 20px 40px;
+    border-radius: 12px;
+    font-size: 36px;
+    font-weight: 700;
+    color: white;
+    border: 3px solid #ff2a6d;
+}
+
+.countdown-date {
+    margin-top: 15px;
+    font-size: 22px;
+    font-weight: 600;
+    color: white;
 }
 
 /* FOOTER */
@@ -188,14 +195,8 @@ nav a:hover {
     </nav>
 </header>
 
-<!-- SOON OPEN -->
+<!-- SOON OPEN POPUP -->
 <div class="soon" id="soonScreen">SOON OPEN</div>
-
-<!-- COUNTDOWN -->
-<div class="countdown-container">
-    <div class="countdown-box" id="countdown">Loading...</div>
-    <div class="big-timer-date">1.04.26</div>
-</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -218,18 +219,27 @@ nav a:hover {
     Sqvnix and Polcovodec are bringing back the legend — CIA.
 </div>
 
+<!-- COUNTDOWN BELOW INFO -->
+<div class="countdown-container">
+    <div class="countdown-box" id="countdown">Loading...</div>
+    <div class="countdown-date">1.04.26</div>
+</div>
+
 <div class="footer">@CIALEAGUE2026</div>
 
 <script>
+// Discord button
 function join() {
     window.open("https://discord.gg/WXKUCSwv","_blank");
 }
 
-// SHOW SOON OPEN ON NAV CLICK
+// SHOW SOON OPEN ON NAV CLICK WITH ANIMATION
 function showSoon() {
     const el = document.getElementById("soonScreen");
-    el.style.display = "flex";
-    setTimeout(() => el.style.display = "none", 2000);
+    el.style.top = "0";
+    setTimeout(() => {
+        el.style.top = "-100%";
+    }, 2000);
 }
 
 // COUNTDOWN TO 1.04.26
